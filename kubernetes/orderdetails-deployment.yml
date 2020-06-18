@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderdetails
+  labels:
+    app: orderdetails
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: orderdetails
+  template:
+    metadata:
+      labels:
+        app: orderdetails
+    spec:
+      containers:
+      - name: orderdetails
+        image: tusharag/orderdetails-service:1.0.1-RELEASE
+        ports:
+        - containerPort: 8002
+        env:
+        - name: JAEGER_HOST
+          value: jaeger-agent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderdetails
+  labels:
+    app: orderdetails
+spec:
+  ports:
+  - port: 8002
+    protocol: TCP
+  selector:
+    app: orderdetails
+  type: LoadBalancer

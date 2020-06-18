@@ -1,0 +1,13 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: service-discovery-client
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["services", "pods", "configmaps", "endpoints"]
+  verbs: ["get", "watch", "list"]
+ 
+#nextstep 
+ #kubectl create clusterrolebinding default:service-discovery-client --clusterrole service-discovery-client --serviceaccount default:default
+ 
+ #Ref: - https://kubernetes.io/docs/reference/access-authn-authz/rbac/
